@@ -18,7 +18,7 @@ void NodeAppend(List* list, int num);
 //노드 삭제
 void NodeDelete(List* list, int num);
 //노드 검색
-void NodeSearch(List* list, int num);
+Node* NodeSearch(List* list, int num);
 //노드 수정
 void NodeUpdate(List* list, int search, int update);
 //전체 노드 출력
@@ -54,7 +54,7 @@ void NodeAppend(List* list, int num) {
 		ptr = ptr->next;
 	}
 }
-void NodeSearch(List* list, int num) {
+Node* NodeSearch(List* list, int num) {
 	//num 검색할 값
 	//검색 결과가 없으면 검색 결과가 없다 출력
 	Node* node = list->header;//header가 첫번째 노드
@@ -62,12 +62,13 @@ void NodeSearch(List* list, int num) {
 	while (node != NULL) {
 		if (node->data == num) {
 			printf("해당 데이터 검색, 몇 번째 노드 : %d\n",i);
-			return;
+			return node;
 		}
 		node = node->next;//다음 노드로 이동
 		i++;
 	}
 	printf("검색한 결과 해당데이터가 없습니다.\n");
+	return NULL;
 }
 void NodeDelete(List* list, int num) {
 	Node* node = list->header;//header가 첫번째 노드
@@ -83,6 +84,7 @@ void NodeDelete(List* list, int num) {
 				back->next = node->next;
 			//free 이용해서 해당 노드 해제
 			free(node);//free는 malloc으로 동적할당한 메모리를 해제 함수
+			list->size--;
 			printf("%d 데이터 삭제 완료\n", num);
 			return;
 		}
@@ -91,6 +93,20 @@ void NodeDelete(List* list, int num) {
 	
 	}
 	printf("삭제할 데이터가 없습니다.\n");
+}
+//search : 검색할 값,  update : 수정될 값
+void NodeUpdate(List* list, int search, int update) {
+	Node* node = NodeSearch(list, search);
+	if (node != NULL) {
+		node->data = update;
+		printf("데이터 수정 완료\n");
+	}
+	else {
+		printf("데이터 수정 실패\n");
+	}
+}
+void PrintNodeCount(List* list) {
+	printf("현재 저장된 노드 개수 : %d\n", list->size);
 }
 void PrintAllNode(List* list) {
 	//전체 노드 순차 출력
@@ -112,7 +128,10 @@ int main(void) {
 	NodeSearch(&list, 4);
 	NodeDelete(&list, 1);
 	PrintAllNode(&list);
-
+	NodeUpdate(&list, 3, 11);
+	PrintAllNode(&list);
+	NodeUpdate(&list, 1, 100);
+	PrintNodeCount(&list);
 	return 0;
 };
 
