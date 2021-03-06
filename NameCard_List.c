@@ -45,8 +45,17 @@ void updateNameCard() {
 
 
 //전체 NameCard 목록 출력
-void printAllNameCard() {
-	
+void printAllNameCard(List* list) {
+	Node* ptr = list->header;
+	int i = 0;
+	while (ptr != NULL) {
+		printf("%d번째 노드\n", i++);
+		printf("이름 : %s\n", ptr->data->name);
+		printf("회사명 : %s\n", ptr->data->company);
+		printf("직급 : %d\n", ptr->data->position);
+		printf("연락처 : %s\n", ptr->data->tel);
+		ptr = ptr->next;
+	}
 }
 
 //데이터 초기화
@@ -55,8 +64,8 @@ void init(List *list) {
 	list->header = NULL;
 
 	//데이터를 임의로 4건
-	Node* ptr = list->header;
-	ptr = (Node*)malloc(sizeof(Node));
+	Node* ptr = (Node*)malloc(sizeof(Node));
+	list->header = ptr; //메모리 할당해서 헤더에 연결
 	ptr->data = (NameCard*)malloc(sizeof(NameCard));
 	strcpy(ptr->data->name, "홍길동");
 	strcpy(ptr->data->company, "ABC마트");
@@ -88,6 +97,7 @@ void init(List *list) {
 	strcpy(ptr->data->tel, "01000006789");
 	list->size++;
 	ptr->next = NULL;
+	
 }
 int main(void) {
 	List list;
@@ -117,7 +127,7 @@ int main(void) {
 			updateNameCard();
 			break;
 		case 5:
-			printAllNameCard();
+			printAllNameCard(&list);
 			break;
 		}
 	} while (no != 0);
