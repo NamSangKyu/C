@@ -77,11 +77,16 @@ void NodeDelete(List* list, int num) {
 		if (node->data == num) {
 			//삭제 작업
 			//이전 노드의 next 포인터에 현재 노드의 next포인터를 저장
+			if (back == NULL)//첫번째 노드(header)의 데이터를 삭제
+				list->header = node->next;
+			else
+				back->next = node->next;
 			//free 이용해서 해당 노드 해제
+			free(node);//free는 malloc으로 동적할당한 메모리를 해제 함수
+			printf("%d 데이터 삭제 완료\n", num);
 			return;
 		}
-		//이전노드 저장
-
+		back = node;//현재 노드를 이전노드에 저장
 		node = node->next;//다음 노드로 이동
 	
 	}
@@ -105,7 +110,8 @@ int main(void) {
 	NodeAppend(&list, 7); NodeAppend(&list, 8);
 	PrintAllNode(&list);
 	NodeSearch(&list, 4);
-
+	NodeDelete(&list, 1);
+	PrintAllNode(&list);
 
 	return 0;
 };
