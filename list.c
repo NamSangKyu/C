@@ -69,6 +69,24 @@ void NodeSearch(List* list, int num) {
 	}
 	printf("검색한 결과 해당데이터가 없습니다.\n");
 }
+void NodeDelete(List* list, int num) {
+	Node* node = list->header;//header가 첫번째 노드
+	Node* back = NULL;
+	
+	while (node != NULL) {
+		if (node->data == num) {
+			//삭제 작업
+			//이전 노드의 next 포인터에 현재 노드의 next포인터를 저장
+			//free 이용해서 해당 노드 해제
+			return;
+		}
+		//이전노드 저장
+
+		node = node->next;//다음 노드로 이동
+	
+	}
+	printf("삭제할 데이터가 없습니다.\n");
+}
 void PrintAllNode(List* list) {
 	//전체 노드 순차 출력
 	Node* node = list->header;//header가 첫번째 노드
