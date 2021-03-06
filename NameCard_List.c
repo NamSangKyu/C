@@ -26,8 +26,34 @@ typedef struct list {
 }List;
 
 //데이터 등록 - NameCard 정보 등록 --> list 배열에 저장
-void AddNameCard() {
-	
+void AddNameCard(List *list) {
+	//NameCard 생성 입력
+	NameCard *data = (NameCard*)malloc(sizeof(NameCard));
+	printf("이름 입력 : "); scanf(" %s", data->name);
+	printf("회사명 입력 : "); scanf(" %s", data->company);
+	printf("직급 입력 : "); scanf(" %d", &data->position);
+	printf("연락처 입력 : "); scanf(" %s", data->tel);
+	//Node생성 NameCard 저장, next 포인터를 NULL로 초기화
+	Node* node = (Node*)malloc(sizeof(Node));
+	node->data = data;
+	node->next = NULL;
+
+	//첫번째 노드가 NULL?
+	if (list->header == NULL) {
+		//	-- 첫번째 노드가 NULL 데이터가 하나도 없다
+		//	-- header에 생성한 노드 연결
+		list->header = node;
+		list->size++;
+		return;
+	}
+	//첫번째 노드에 데이터가 있는 경우
+	Node* temp = list->header;
+	while (temp->next != NULL) {
+		//	-- 마지막 노드 이동
+		temp = temp->next;
+	}
+	//	-- 마지막 노드 next 포인터에 연결
+	temp->next = node;
 }
 //데이터 검색 - 이름을 받아서 검색
 struct NameCard* searchNameCard() {
@@ -115,7 +141,7 @@ int main(void) {
 		scanf_s("%d", &no);
 		switch (no) {
 		case 1:
-			AddNameCard();
+			AddNameCard(&list);
 			break;
 		case 2:
 			searchNameCard();
