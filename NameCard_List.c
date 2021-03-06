@@ -11,7 +11,7 @@ typedef struct NameCard {
 	char name[20];//20
 	char company[30];//32
 	int position;//4
-	char tel[11];//12
+	char tel[12];//12
 } NameCard;
 //노드
 typedef struct node {
@@ -50,31 +50,48 @@ void printAllNameCard() {
 }
 
 //데이터 초기화
-void init() {
+void init(List *list) {
+	list->size = 0;
+	list->header = NULL;
+
 	//데이터를 임의로 4건
-	/*strcpy(list[index].name, "홍길동");
-	strcpy(list[index].company, "ABC마트");
-	list[index].position = 3;
-	strcpy(list[index].tel, "01012345678");
-	index++;
-	strcpy(list[index].name, "김철수");
-	strcpy(list[index].company, "N사");
-	list[index].position = 2;
-	strcpy(list[index].tel, "01011112222");
-	index++;
-	strcpy(list[index].name, "이영수");
-	strcpy(list[index].company, "K사");
-	list[index].position = 4;
-	strcpy(list[index].tel, "01033334444");
-	index++;
-	strcpy(list[index].name, "박문수");
-	strcpy(list[index].company, "C카페");
-	list[index].position = 7;
-	strcpy(list[index].tel, "01000006789");
-	index++;*/
+	Node* ptr = list->header;
+	ptr = (Node*)malloc(sizeof(Node));
+	ptr->data = (NameCard*)malloc(sizeof(NameCard));
+	strcpy(ptr->data->name, "홍길동");
+	strcpy(ptr->data->company, "ABC마트");
+	ptr->data->position = 3;
+	strcpy(ptr->data->tel, "01012345678");
+	list->size++;
+	ptr->next = (Node*)malloc(sizeof(Node));
+	ptr = ptr->next;
+	ptr->data = (NameCard*)malloc(sizeof(NameCard));
+	strcpy(ptr->data->name, "김철수");
+	strcpy(ptr->data->company, "N사");
+	ptr->data->position = 2;
+	strcpy(ptr->data->tel, "01011112222");
+	list->size++;
+	ptr->next = (Node*)malloc(sizeof(Node));
+	ptr = ptr->next;
+	ptr->data = (NameCard*)malloc(sizeof(NameCard));
+	strcpy(ptr->data->name, "이영수");
+	strcpy(ptr->data->company, "K사");
+	ptr->data->position = 4;
+	strcpy(ptr->data->tel, "01033334444");
+	list->size++;
+	ptr->next = (Node*)malloc(sizeof(Node));
+	ptr = ptr->next;
+	ptr->data = (NameCard*)malloc(sizeof(NameCard));
+	strcpy(ptr->data->name, "박문수");
+	strcpy(ptr->data->company, "C카페");
+	ptr->data->position = 7;
+	strcpy(ptr->data->tel, "01000006789");
+	list->size++;
+	ptr->next = NULL;
 }
 int main(void) {
-	init();
+	List list;
+	init(&list);
 	int no = 0;
 	do {
 		printf("--NameCard 메뉴--\n");
