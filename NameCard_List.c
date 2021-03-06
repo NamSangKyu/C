@@ -26,9 +26,9 @@ typedef struct list {
 }List;
 
 //데이터 등록 - NameCard 정보 등록 --> list 배열에 저장
-void AddNameCard(List *list) {
+void AddNameCard(List* list) {
 	//NameCard 생성 입력
-	NameCard *data = (NameCard*)malloc(sizeof(NameCard));
+	NameCard* data = (NameCard*)malloc(sizeof(NameCard));
 	printf("이름 입력 : "); scanf(" %s", data->name);
 	printf("회사명 입력 : "); scanf(" %s", data->company);
 	printf("직급 입력 : "); scanf(" %d", &data->position);
@@ -56,14 +56,14 @@ void AddNameCard(List *list) {
 	temp->next = node;
 }
 //데이터 검색 - 이름을 받아서 검색
-struct NameCard* searchNameCard(List *list) {
-	Node* node= list->header;
+struct NameCard* searchNameCard(List* list) {
+	Node* node = list->header;
 	char name[20];
 	int i = 0;
 	printf("검색할 이름을 입력 : ");
 	scanf(" %s", name);
 	while (node != NULL) {
-		if (strcmp(node->data->name, name)==0) {
+		if (strcmp(node->data->name, name) == 0) {
 			printf("검색 결과 %d번째 노드에 위치함\n", i);
 			return node->data;
 		}
@@ -73,12 +73,48 @@ struct NameCard* searchNameCard(List *list) {
 	return NULL;
 }
 //데이터 삭제 - 이름으로 검색해서 삭제
-void deleteNameCard() {
-
+void deleteNameCard(List* list) {
+	Node* node = list->header;
+	Node* back = NULL;
+	char name[20];
+	int i = 0;
+	printf("삭제할 이름을 입력 : ");
+	scanf(" %s", name);
+	while (node != NULL) {
+		if (strcmp(node->data->name, name) == 0) {
+			if (back == NULL)
+				list->header = node->next;
+			else
+				back->next = node->next;
+			break;
+		}
+		back = node;
+		node = node->next;
+		i++;
+	}
 }
 //데이터 수정 - 이름으로 검색 후 데이터 입력을 받아서 수정
-void updateNameCard() {
-	
+void updateNameCard(List* list) {
+	Node* node = list->header;
+	char name[20];
+	int i = 0;
+	printf("검색할 이름을 입력 : ");
+	scanf(" %s", name);
+	while (node != NULL) {
+		if (strcmp(node->data->name, name) == 0) {
+			printf("수정할 이름 : ");
+			scanf(" %s", node->data->name);
+			printf("수정할 회사명 : ");
+			scanf(" %s", node->data->company);
+			printf("수정할 직급 : ");
+			scanf(" %d", node->data->position);
+			printf("수정할 연락처 : ");
+			scanf(" %s", node->data->tel);
+			break;
+		}
+		node = node->next;
+		i++;
+	}
 }
 
 
@@ -97,7 +133,7 @@ void printAllNameCard(List* list) {
 }
 
 //데이터 초기화
-void init(List *list) {
+void init(List* list) {
 	list->size = 0;
 	list->header = NULL;
 
@@ -135,7 +171,7 @@ void init(List *list) {
 	strcpy(ptr->data->tel, "01000006789");
 	list->size++;
 	ptr->next = NULL;
-	
+
 }
 int main(void) {
 	List list;
@@ -159,10 +195,10 @@ int main(void) {
 			searchNameCard(&list);
 			break;
 		case 3:
-			deleteNameCard();
+			deleteNameCard(&list);
 			break;
 		case 4:
-			updateNameCard();
+			updateNameCard(&list);
 			break;
 		case 5:
 			printAllNameCard(&list);
