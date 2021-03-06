@@ -107,7 +107,7 @@ void updateNameCard(List* list) {
 			printf("수정할 회사명 : ");
 			scanf(" %s", node->data->company);
 			printf("수정할 직급 : ");
-			scanf(" %d", node->data->position);
+			scanf(" %d", &node->data->position);
 			printf("수정할 연락처 : ");
 			scanf(" %s", node->data->tel);
 			break;
