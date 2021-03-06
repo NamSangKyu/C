@@ -56,8 +56,20 @@ void AddNameCard(List *list) {
 	temp->next = node;
 }
 //데이터 검색 - 이름을 받아서 검색
-struct NameCard* searchNameCard() {
-	
+struct NameCard* searchNameCard(List *list) {
+	Node* node= list->header;
+	char name[20];
+	int i = 0;
+	printf("검색할 이름을 입력 : ");
+	scanf(" %s", name);
+	while (node != NULL) {
+		if (strcmp(node->data->name, name)==0) {
+			printf("검색 결과 %d번째 노드에 위치함\n", i);
+			return node->data;
+		}
+		node = node->next;
+		i++;
+	}
 	return NULL;
 }
 //데이터 삭제 - 이름으로 검색해서 삭제
@@ -144,7 +156,7 @@ int main(void) {
 			AddNameCard(&list);
 			break;
 		case 2:
-			searchNameCard();
+			searchNameCard(&list);
 			break;
 		case 3:
 			deleteNameCard();
