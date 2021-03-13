@@ -84,8 +84,53 @@ void UpdateEmployee() {
 	int pos;
 	cout << "수정할 직급 : "; cin >> pos; r->SetPosition(pos);
 }
+//삭제
+void DeleteEmployee() {
+	//삭제할 사번 입력
+	char eno[10];
+	cout << "삭제할 사번 입력 : "; cin >> eno;
+	//삭제할 데이터 검색
+	for (int i = 0; i < idx; i++) {
+		if (strcmp(eno, arr[i]->GetEno()) == 0) {
+		//    1. 메모리 해제 delete	
+			delete arr[i];
+		//	  2. 삭제된 다음 위치 포인터 정보를 이전 배열에다가 저장
+			for (int j = i; j < idx - 1;j++)
+				arr[j] = arr[j + 1];
+			idx--;
+			cout << "삭제 완료" << endl;
+			return;
+		}
+	}
+	cout << "삭제할 데이터가 없습니다." << endl;
+}
 int main(void) {
-	
+	int menu;
+
+	while (true) {
+		cout << "1. 사원 정보 등록" << endl;
+		cout << "2. 사원 정보 삭제" << endl;
+		cout << "3. 사원 정보 수정" << endl;
+		cout << "4. 사원 정보 검색" << endl;
+		cout << "0. 프로그램 종료" << endl;
+		cout << "메뉴 번호 입력 : "; cin >> menu;
+		if (menu == 0) break;
+		switch (menu) {
+		case 1:
+			InsertEmployee();
+			break;
+		case 2:
+			DeleteEmployee();
+			break;
+		case 3:
+			UpdateEmployee();
+			break;
+		case 4:
+			SearchEmployee();
+			break;
+		}
+	}
+
 	return 0;
 }
 
