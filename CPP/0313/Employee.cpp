@@ -18,6 +18,13 @@ public:
 		position = p;
 	}
 	char* GetEno() { return eno; }
+	void SetEno(char *e){ strcpy_s(eno, sizeof(eno), e); }
+	void SetName(char *n){ strcpy_s(name, sizeof(name), n); }
+	void SetDepartment(char *d){ 
+		strcpy_s(department, sizeof(department), d); 
+	}
+	void SetPosition(int p) { position = p; }
+
 	const char* ReturnPosition() {
 		return pList[position-1];
 	}
@@ -68,7 +75,14 @@ Employee* SearchEmployee() {
 //수정
 void UpdateEmployee() {
 	//수정할 데이터 검색
+	Employee* r = SearchEmployee();
+	if (r == NULL) return;
 	//데이터를 입력받아서 수정
+	char temp[30];
+	cout << "수정할 이름 : "; cin >> temp; r->SetName(temp);
+	cout << "수정할 부서 : "; cin >> temp; r->SetDepartment(temp);
+	int pos;
+	cout << "수정할 직급 : "; cin >> pos; r->SetPosition(pos);
 }
 int main(void) {
 	
