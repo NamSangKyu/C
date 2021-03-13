@@ -17,6 +17,7 @@ public:
 		strcpy_s(department, sizeof(department), d);
 		position = p;
 	}
+	char* GetEno() { return eno; }
 	const char* ReturnPosition() {
 		return pList[position-1];
 	}
@@ -29,14 +30,53 @@ public:
 		cout << "직급 : " << ReturnPosition() << endl;
 	}
 };
-
-
+Employee* arr[10];
+int idx = 0;
+void InsertEmployee() {
+	//Employee 데이터를 하나 입력받아서 arr에 추가하는 부분
+	//사번, 이름, 부서, 직급 입력 처리
+	char eno[10];
+	char name[30];
+	char department[30];
+	int position;
+	if (idx == 10) {
+		cout << "더이상 저장될 공간이 없습니다." << endl;
+		return;
+	}
+	cout << "사번 : "; cin >> eno;
+	cout << "이름 : "; cin >> name;
+	cout << "부서 : "; cin >> department;
+	cout << "직급 : "; cin >> position;
+	arr[idx] = new Employee(eno, name, department, position);
+	idx++;
+}
+//검색
+Employee* SearchEmployee() {
+	//사번 입력 후 해당 데이터를 검색
+	//1. 사번을 입력
+	char eno[10];
+	cout << "검색할 사번 : "; cin >> eno;
+	//2. 반복문 + strcmp 이용해서 해당 데이터를 조회
+	for (int i = 0; i < idx; i++) {
+		if (strcmp(eno, arr[i]->GetEno()) == 0) {
+			arr[i]->PrintEmployeeInfo();
+			return arr[i];
+		}
+	}
+	return NULL;
+}
+//수정
+void UpdateEmployee() {
+	//수정할 데이터 검색
+	//데이터를 입력받아서 수정
+}
 int main(void) {
-	char eno[10] = "A0001";
-	char name[30] = "홍길동";
-	char department[30] = "경영지원팀";
-	Employee p(eno, name, department, 4);
-	p.PrintEmployeeInfo();
-
+	
 	return 0;
 }
+
+
+
+
+
+
